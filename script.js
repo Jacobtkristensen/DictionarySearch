@@ -67,28 +67,24 @@ function binarySearch(array, searchWord, compare) {
     return -1; //not found
 }
 
-
-//måtte få hjælp af chatgpt for at få performance til at fungere.
-async function performSearches() {
+//kunne ikke få performance.mark & performance.measure til at virke, så bruger performance.now og gemmer dem i variabler
+async function performanceCheck() {
     await loadDictionary();
 
-    // Measure performance of findIndex
     let startTime = performance.now();
-    const index = globalArrayOfWords.findIndex(word => word.variant === searchWord);
+    globalArrayOfWords.findIndex(word => word.variant === searchWord);
     let endTime = performance.now();
     let findIndexTime = endTime - startTime;
     console.log(`findIndex time: ${findIndexTime} milliseconds`);
 
-    // Measure performance of binarySearch
     startTime = performance.now();
-    const binaryIndex = binarySearch(globalArrayOfWords, searchWord, compare);
+    binarySearch(globalArrayOfWords, searchWord, compare);
     endTime = performance.now();
     let binarySearchTime = endTime - startTime;
-    console.log(`binarySearch time: ${binarySearchTime} milliseconds`);
+    console.log(`binarySearch tid: ${binarySearchTime} milliseconds`);
 
-    // Output comparison
     console.log("forskel på findIndex og binarySearch: " + (findIndexTime - binarySearchTime) + "ms");
 }
 
-performSearches();
+performanceCheck();
 
